@@ -1,6 +1,7 @@
 package com.wesoft.mvvmachitecture.ui.main
 
 import android.os.Bundle
+import android.support.annotation.MainThread
 import android.support.v7.app.AppCompatActivity
 import com.wesoft.mvvmachitecture.R
 
