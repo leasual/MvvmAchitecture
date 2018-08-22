@@ -1,6 +1,7 @@
 package com.wesoft.mvvmachitecture.base
 
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import javax.inject.Inject
 
 /**

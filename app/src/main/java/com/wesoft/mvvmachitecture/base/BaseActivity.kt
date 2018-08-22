@@ -18,7 +18,7 @@ import javax.inject.Inject
  * Created by james.li on 2018/8/21.
  */
 
-abstract class BaseActivity<M: BaseViewModel, B: ViewDataBinding>: RxAppCompatActivity(), HasSupportFragmentInjector {
+abstract class BaseActivity<M: BaseViewModel<*>, B: ViewDataBinding>: RxAppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
