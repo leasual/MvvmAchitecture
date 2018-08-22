@@ -1,14 +1,18 @@
 package com.wesoft.mvvmachitecture.base
 
 import com.wesoft.mvvmachitecture.api.APIService
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by james on 2018/8/21.
  */
-@Singleton
-abstract class BaseRepository @Inject constructor() {
+
+abstract class BaseRepository {
+
     @Inject
     lateinit var apiService: APIService
+
+    val dispose: CompositeDisposable = CompositeDisposable()
+
 }

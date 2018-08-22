@@ -1,16 +1,16 @@
 package com.wesoft.mvvmachitecture.ui.main
 
-import android.os.Bundle
-import android.support.annotation.MainThread
-import android.support.v7.app.AppCompatActivity
 import com.wesoft.mvvmachitecture.R
+import com.wesoft.mvvmachitecture.base.BaseActivity
+import com.wesoft.mvvmachitecture.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
+    override fun getLayoutId(): Int = R.layout.activity_main
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun setupViews() {
+        mBinding.tvTitle.text = viewModel.getRepo()
     }
+
+
 }
