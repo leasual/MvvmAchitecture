@@ -17,5 +17,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
        })
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("test", "destroy")
+    }
 }

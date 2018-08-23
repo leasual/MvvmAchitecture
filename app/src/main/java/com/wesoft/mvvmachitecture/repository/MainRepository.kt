@@ -4,7 +4,9 @@ package com.wesoft.mvvmachitecture.repository
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import com.wesoft.mvvmachitecture.base.BaseRepository
+import com.wesoft.mvvmachitecture.model.Category
 import com.wesoft.mvvmachitecture.model.CategoryBean
+import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,7 +20,7 @@ class MainRepository @Inject constructor(): BaseRepository() {
     fun getResult(): String = "Test"
 
     fun getCategories(): LiveData<List<CategoryBean>> {
-        return object : NetworkBoundResource<List<CategoryBean>, List<CategoryBean>>(dispose) {
+        return object : NetworkBoundResource<List<CategoryBean>, Category>(dispose) {
             override fun cache(data: List<CategoryBean>) {
 
             }
@@ -32,7 +34,7 @@ class MainRepository @Inject constructor(): BaseRepository() {
             }
 
 
-            override fun callApi(): LiveData<List<CategoryBean>>  = apiService.getToday()
+            override fun callApi(): Flowable<Category>  = apiService.getToday()
 
         }.asLiveData()
     }

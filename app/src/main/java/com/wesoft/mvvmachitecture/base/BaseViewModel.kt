@@ -17,6 +17,7 @@ abstract class BaseViewModel<R: BaseRepository> : ViewModel() {
         if (!repository.dispose.isDisposed) {
             repository.dispose.dispose()
             repository.dispose.clear()
+            Log.d("test", "clear dispose")
         }
     }
 }

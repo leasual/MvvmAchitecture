@@ -1,7 +1,7 @@
 package com.wesoft.mvvmachitecture.api
 
-import android.arch.lifecycle.LiveData
-import com.wesoft.mvvmachitecture.model.CategoryBean
+import com.wesoft.mvvmachitecture.model.Category
+import io.reactivex.Flowable
 import retrofit2.http.GET
 
 /**
@@ -10,6 +10,6 @@ import retrofit2.http.GET
 
 interface APIService {
 
-    @GET("today")
-    fun getToday(): LiveData<List<CategoryBean>>
+    @GET("xiandu/categories")
+    fun getToday(): Flowable<Category>
 }
