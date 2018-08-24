@@ -1,11 +1,10 @@
 package com.wesoft.mvvmachitecture.repository
 
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MediatorLiveData
 import com.wesoft.mvvmachitecture.base.BaseRepository
-import com.wesoft.mvvmachitecture.model.Category
+import com.wesoft.mvvmachitecture.model.BaseResponse
 import com.wesoft.mvvmachitecture.model.CategoryBean
+import com.wesoft.mvvmachitecture.vo.NetworkBoundResource
 import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,25 +16,23 @@ import javax.inject.Singleton
 @Singleton
 class MainRepository @Inject constructor(): BaseRepository() {
 
-    fun getResult(): String = "Test"
+    fun getCategories(): Flowable<List<CategoryBean>> {
+        return object : NetworkBoundResource<List<CategoryBean>, BaseResponse<List<CategoryBean>>>() {
 
-    fun getCategories(): LiveData<List<CategoryBean>> {
-        return object : NetworkBoundResource<List<CategoryBean>, Category>(dispose) {
+            override fun loadFromDB(): Flowable<List<CategoryBean>>? {
+                return null
+            }
+
+            override fun shouldFetch(data: List<CategoryBean>?): Boolean = (data == null || data.isEmpty())
+
             override fun cache(data: List<CategoryBean>) {
 
             }
 
-            override fun shouldFetch(data: List<CategoryBean>): Boolean {
-                return true
+            override fun callApi(): Flowable<BaseResponse<List<CategoryBean>>> {
+                return apiService.getToday()
             }
 
-            override fun loadFromDB(): LiveData<List<CategoryBean>> {
-                return MediatorLiveData<List<CategoryBean>>()
-            }
-
-
-            override fun callApi(): Flowable<Category>  = apiService.getToday()
-
-        }.asLiveData()
+        }.asFlowable()
     }
 }

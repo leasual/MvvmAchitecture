@@ -8,11 +8,12 @@ import io.reactivex.Flowable
  * Created by james on 2018/8/22.
  */
 
-open class BaseResponse {
-    @SerializedName("error") var code: Boolean = true
-}
+data class BaseResponse<T> (
+    @SerializedName("error") var code: Boolean,
+    @SerializedName("results") var data: T
+)
 
-fun BaseResponse.filterData(): Flowable<BaseResponse> {
+fun <T> BaseResponse<T>.filterData(): Flowable<BaseResponse<T>> {
     Log.d("test", "code= $code")
     return if (!code) {
         Flowable.just(this)
@@ -20,9 +21,6 @@ fun BaseResponse.filterData(): Flowable<BaseResponse> {
         Flowable.error(Throwable("error"))
     }
 }
-data class Category(
-        @SerializedName("results") var dataList: List<CategoryBean>
-): BaseResponse()
 
 data class CategoryBean(
         @SerializedName("_id") var id: String,
