@@ -1,6 +1,7 @@
 package com.wesoft.mvvmachitecture.repository
 
 
+import com.wesoft.mvvmachitecture.App
 import com.wesoft.mvvmachitecture.base.BaseRepository
 import com.wesoft.mvvmachitecture.model.BaseResponse
 import com.wesoft.mvvmachitecture.model.CategoryBean
@@ -14,10 +15,10 @@ import javax.inject.Singleton
  */
 
 @Singleton
-class MainRepository @Inject constructor(): BaseRepository() {
+class MainRepository @Inject constructor(private val app: App): BaseRepository() {
 
     fun getCategories(): Flowable<List<CategoryBean>> {
-        return object : NetworkBoundResource<List<CategoryBean>, BaseResponse<List<CategoryBean>>>() {
+        return object : NetworkBoundResource<List<CategoryBean>, BaseResponse<List<CategoryBean>>>(app) {
 
             override fun loadFromDB(): Flowable<List<CategoryBean>>? {
                 return null

@@ -1,4 +1,4 @@
-package com.wesoft.sdk.utils
+package com.wesoft.mvvmachitecture.api
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader

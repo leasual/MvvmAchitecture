@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder
 import com.wesoft.mvvmachitecture.App
 import com.wesoft.mvvmachitecture.BuildConfig
 import com.wesoft.mvvmachitecture.api.APIService
-import com.wesoft.sdk.utils.NullStringToEmptyAdapterFactory
+import com.wesoft.mvvmachitecture.api.NullStringToEmptyAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache

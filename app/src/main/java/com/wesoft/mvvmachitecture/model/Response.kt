@@ -2,6 +2,7 @@ package com.wesoft.mvvmachitecture.model
 
 import android.util.Log
 import com.google.gson.annotations.SerializedName
+import com.wesoft.mvvmachitecture.api.APIException
 import io.reactivex.Flowable
 
 /**
@@ -10,7 +11,8 @@ import io.reactivex.Flowable
 
 data class BaseResponse<T> (
     @SerializedName("error") var code: Boolean,
-    @SerializedName("results") var data: T
+    @SerializedName("results") var data: T,
+    @SerializedName("message") var message: String
 )
 
 fun <T> BaseResponse<T>.filterData(): Flowable<BaseResponse<T>> {
@@ -18,7 +20,7 @@ fun <T> BaseResponse<T>.filterData(): Flowable<BaseResponse<T>> {
     return if (!code) {
         Flowable.just(this)
     }else {
-        Flowable.error(Throwable("error"))
+        Flowable.error(APIException(message, code))
     }
 }
 

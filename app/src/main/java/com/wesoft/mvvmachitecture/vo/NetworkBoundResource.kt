@@ -1,17 +1,21 @@
 package com.wesoft.mvvmachitecture.vo
 
 import android.util.Log
+import com.wesoft.mvvmachitecture.App
+import com.wesoft.mvvmachitecture.api.APIException
+import com.wesoft.mvvmachitecture.extension.isNetworkAvailable
+import com.wesoft.mvvmachitecture.extension.toast
 import com.wesoft.mvvmachitecture.model.BaseResponse
 import com.wesoft.mvvmachitecture.model.filterData
-import com.wesoft.mvvmachitecture.util.ioMain
+import com.wesoft.mvvmachitecture.extension.ioMain
 import io.reactivex.Flowable
+import retrofit2.HttpException
 
 /**
  * Created by james on 2018/8/22.
  */
-//https://android.jlelse.eu/networkboundresource-with-rxjava-and-kotlin-sealed-classes-1574bc516f82
 
-abstract class NetworkBoundResource<ResultType, RequestType> {
+abstract class NetworkBoundResource<ResultType, RequestType>(val app: App) {
 
     private val result: Flowable<ResultType>
 
@@ -22,23 +26,45 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                     ?.ioMain()
         }
         //network
+        @Suppress("UNCHECKED_CAST")
         val networkFlowable = Flowable.defer {
             callApi()
                     .flatMap { (it as BaseResponse<*>).filterData() }
                     .ioMain()
                     .doOnNext {
-                       cache(it.data as ResultType)
+                        cache(it.data as ResultType)
                     }
-                    .onErrorReturn {
-                        Log.d("test", "error return= ${it.printStackTrace()}")
-                        throw it
+                    .onErrorResumeNext { throwable: Throwable ->
+                        when (throwable) {
+                            is HttpException -> {
+                                if (throwable.response().code() == 404) {
+                                    app.applicationContext.toast("服务器地址不存在")
+                                } else {
+                                    app.applicationContext.toast("网络不给力，请重试")
+                                }
+                            }
+                            is APIException -> {
+                                app.applicationContext.toast(throwable.info)
+                            }
+                            else -> {
+                                app.applicationContext.toast("数据异常，请重试")
+                            }
+                        }
+                        Log.d("test", "error return= ${throwable.printStackTrace()}")
+                        Flowable.empty()
                     }
-        }.flatMap { loadFromDB() }
+        }.flatMap { Flowable.just(it.data as ResultType) }
 
         //whether should fetch from network
+        val networkState = app.applicationContext.isNetworkAvailable()
         @Suppress("LeakingThis")
-        result = networkFlowable//shouldFetch(null).let { networkFlowable } ?: diskFlowable
-
+        when (networkState) {
+            true -> result = shouldFetch(null).let { networkFlowable } ?: diskFlowable
+            else -> {
+                app.applicationContext.toast("网络未连接，请检查网络再重试")
+                result = Flowable.empty()
+            }
+        }
     }
 
     protected abstract fun shouldFetch(data: ResultType?): Boolean
