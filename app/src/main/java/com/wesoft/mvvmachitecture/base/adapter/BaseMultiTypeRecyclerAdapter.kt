@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 
 /**
- * Created by james on 2018/8/25.
+ * Created by james on 2018/8/24.
  */
 
 abstract class BaseMultiTypeRecyclerAdapter : RecyclerView.Adapter<RecyclerViewHolder>() {

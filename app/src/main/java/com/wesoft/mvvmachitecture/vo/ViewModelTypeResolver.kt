@@ -1,6 +1,5 @@
 package com.wesoft.mvvmachitecture.vo
 
-import android.arch.lifecycle.ViewModel
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -10,7 +9,7 @@ import java.lang.reflect.ParameterizedType
 object ViewModelTypeResolver {
 
 
-    fun findViewModelType(cls: Class<*>): Class<out ViewModel>? {
+    inline fun <reified T> findViewModelType(cls: Class<*>): Class<out T>? {
         var parameterizedType: ParameterizedType? = null
 
         if (cls.genericSuperclass is ParameterizedType) {
@@ -24,11 +23,11 @@ object ViewModelTypeResolver {
         parameterizedType.actualTypeArguments
                 .filter {
                     it is Class<*>
-                            && it !== ViewModel::class.java
-                            && ViewModel::class.java.isAssignableFrom(it)
+                            && it !== T::class.java
+                            && T::class.java.isAssignableFrom(it)
                 }.forEach {
             @Suppress("UNCHECKED_CAST")
-            return it as Class<out ViewModel>
+            return it as Class<out T>
         }
 
         return null

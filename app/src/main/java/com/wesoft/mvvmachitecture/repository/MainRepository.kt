@@ -17,20 +17,20 @@ import javax.inject.Singleton
 @Singleton
 class MainRepository @Inject constructor(private val app: App): BaseRepository() {
 
-    fun getCategories(): Flowable<List<CategoryBean>> {
-        return object : NetworkBoundResource<List<CategoryBean>, BaseResponse<List<CategoryBean>>>(app) {
+    fun getCategories(): Flowable<MutableList<CategoryBean>> {
+        return object : NetworkBoundResource<MutableList<CategoryBean>, BaseResponse<MutableList<CategoryBean>>>(app) {
 
-            override fun loadFromDB(): Flowable<List<CategoryBean>>? {
+            override fun loadFromDB(): Flowable<MutableList<CategoryBean>>? {
                 return null
             }
 
-            override fun shouldFetch(data: List<CategoryBean>?): Boolean = (data == null || data.isEmpty())
+            override fun shouldFetch(data: MutableList<CategoryBean>?): Boolean = (data == null || data.isEmpty())
 
-            override fun cache(data: List<CategoryBean>) {
+            override fun cache(data: MutableList<CategoryBean>) {
 
             }
 
-            override fun callApi(): Flowable<BaseResponse<List<CategoryBean>>> {
+            override fun callApi(): Flowable<BaseResponse<MutableList<CategoryBean>>> {
                 return apiService.getToday()
             }
 

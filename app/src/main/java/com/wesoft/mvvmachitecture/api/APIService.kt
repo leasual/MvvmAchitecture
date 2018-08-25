@@ -12,5 +12,5 @@ import retrofit2.http.GET
 interface APIService {
 
     @GET("xiandu/categories")
-    fun getToday(): Flowable<BaseResponse<List<CategoryBean>>>
+    fun getToday(): Flowable<BaseResponse<MutableList<CategoryBean>>>
 }

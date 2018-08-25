@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor() : BaseViewModel<MainRepository>() {
 
-    var categories = MediatorLiveData<List<CategoryBean>>()
+    var categories = MediatorLiveData<MutableList<CategoryBean>>()
 
     fun getCategories() {
         repository

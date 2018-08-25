@@ -40,7 +40,7 @@ abstract class BaseActivity<VM: BaseViewModel<*>, B: ViewDataBinding>: RxAppComp
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        val viewModelType = ViewModelTypeResolver.findViewModelType(javaClass)
+        val viewModelType = ViewModelTypeResolver.findViewModelType<BaseViewModel<*>>(javaClass)
         if(viewModelType != null) {
             @Suppress("UNCHECKED_CAST")
             viewModel = ViewModelProviders.of(this, viewModelFactory).get(viewModelType) as VM
@@ -49,7 +49,7 @@ abstract class BaseActivity<VM: BaseViewModel<*>, B: ViewDataBinding>: RxAppComp
         setupViews()
 
         viewModel.isLoading.observe(this, Observer { isLoading ->
-            //Toast.makeText(this, "loading= $isLoading", Toast.LENGTH_SHORT).show()
+
         })
     }
 
