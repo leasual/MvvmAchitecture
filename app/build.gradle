@@ -10,18 +10,48 @@ android {
         applicationId "com.wesoft.mvvmachitecture"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 1
-        versionName "1.0"
+        versionCode 1000
+        versionName "1.0.0"
         buildConfigField "String", "BASE_URL", "\"https://gank.io/api/\""
         multiDexEnabled true
     }
     dataBinding {
         enabled = true
     }
+    signingConfigs {
+        config {
+            //签名证书设置
+            keyAlias "$KEY_ALIAS"
+            keyPassword "$KEY_PASSWORD"
+            storeFile file("$KEYSTORE_FILE")
+            storePassword "$KEYSTORE_PASSWORD"
+        }
+    }
+
     buildTypes {
-        release {
+        debug {
+            //signingConfig signingConfigs.config
             minifyEnabled false
+            zipAlignEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            //signingConfig signingConfigs.config
+            minifyEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "mode"
+    productFlavors {
+        dev {
+
+        }
+        uat {
+
+        }
+        prod {
+
         }
     }
 
@@ -38,6 +68,18 @@ android {
                 }
             }
         }
+    }
+}
+
+android.applicationVariants.all { variant ->
+    def appName
+    if (project.hasProperty("applicationName")) {
+        appName = applicationName
+    } else {
+        appName = parent.name
+    }
+    variant.outputs.all {
+        outputFileName = "${appName}V${variant.versionName}(${variant.versionCode})-${variant.flavorName}.apk"
     }
 }
 
