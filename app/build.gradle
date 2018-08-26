@@ -73,4 +73,5 @@ dependencies {
     kapt deps.dagger.compiler
     kapt deps.lifecycle.compiler
     kapt deps.databinding
+    kapt deps.glide.compiler
 }
