@@ -1,23 +1,17 @@
 package com.wesoft.mvvmachitecture.extension
 
 import android.content.Context
-import android.support.annotation.IntDef
-import android.support.annotation.IntegerRes
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 
 /**
- * Created by james on 2018/8/26.
+ * Created by james on 2018/8/24.
  */
 
 enum class Display {
     HORIZONTAL, VERTICAL
-}
-
-enum class Direction {
-    GRID, LINEAR, STAGGERD
 }
 
 fun RecyclerView.bindLinearLayout(context: Context, adapter: RecyclerView.Adapter<*>, display: Display = Display.VERTICAL) {

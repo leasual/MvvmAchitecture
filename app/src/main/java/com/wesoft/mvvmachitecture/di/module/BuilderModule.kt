@@ -1,6 +1,7 @@
 package com.wesoft.mvvmachitecture.di.module
 
 import com.wesoft.mvvmachitecture.ui.main.MainActivity
+import com.wesoft.mvvmachitecture.ui.main.MainFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -10,7 +11,7 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class BuilderModule {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [(MainModule::class)])
     abstract fun mainActivity(): MainActivity
 
     // support fragment injection

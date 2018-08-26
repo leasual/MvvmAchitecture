@@ -8,5 +8,5 @@ import android.support.v7.widget.RecyclerView
  */
 open class RecyclerViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bindItem(position: Int, viewModel: Any) {}
+    //fun bindItem(position: Int, viewModel: Any) {}
 }

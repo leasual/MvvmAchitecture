@@ -8,7 +8,7 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
+import android.support.v7.app.AppCompatActivity
 import com.wesoft.mvvmachitecture.extension.PreferencesUtil
 import com.wesoft.mvvmachitecture.vo.ViewModelTypeResolver
 import dagger.android.AndroidInjection
@@ -20,7 +20,7 @@ import javax.inject.Inject
  * Created by james.li on 2018/8/21.
  */
 
-abstract class BaseActivity<VM: BaseViewModel<*>, B: ViewDataBinding>: RxAppCompatActivity(), HasSupportFragmentInjector {
+abstract class BaseActivity<VM: BaseViewModel<*>, B: ViewDataBinding>: AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -46,8 +46,8 @@ abstract class BaseActivity<VM: BaseViewModel<*>, B: ViewDataBinding>: RxAppComp
             viewModel = ViewModelProviders.of(this, viewModelFactory).get(viewModelType) as VM
         }
         mBinding = DataBindingUtil.setContentView(this, getLayoutId())
+        observeData()
         setupViews()
-
         viewModel.isLoading.observe(this, Observer { isLoading ->
 
         })
@@ -57,4 +57,6 @@ abstract class BaseActivity<VM: BaseViewModel<*>, B: ViewDataBinding>: RxAppComp
     abstract fun getLayoutId() : Int
 
     abstract fun setupViews()
+
+    abstract fun observeData()
 }

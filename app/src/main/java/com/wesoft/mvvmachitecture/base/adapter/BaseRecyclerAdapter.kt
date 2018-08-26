@@ -1,5 +1,6 @@
 package com.wesoft.mvvmachitecture.base.adapter
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.annotation.LayoutRes
@@ -14,18 +15,23 @@ import com.wesoft.mvvmachitecture.vo.ViewModelTypeResolver
  */
 
 abstract class BaseRecyclerAdapter<in B : ViewDataBinding, T, in VM : BaseAdapterViewModel> : RecyclerView.Adapter<RecyclerViewHolder>() {
+    lateinit var context: Context
+    private var onItemClick: ((position: Int, model: T) -> Unit)? = null
 
     @Suppress("UNCHECKED_CAST")
     private val viewModel: VM = (ViewModelTypeResolver.findViewModelType<BaseAdapterViewModel>(this.javaClass))?.newInstance() as VM
 
     private var dataList: MutableList<T> = arrayListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder =
-            RecyclerViewHolder(DataBindingUtil.inflate<B>(LayoutInflater.from(parent.context), viewType, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
+        context = parent.context
+        return RecyclerViewHolder(DataBindingUtil.inflate<B>(LayoutInflater.from(parent.context), viewType, parent, false))
+    }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         @Suppress("UNCHECKED_CAST")
         bindItem(holder.binding as B, dataList[position], position, viewModel)
+        onItemClick?.invoke(position, dataList[position])
     }
 
     override fun getItemViewType(position: Int): Int = getLayoutId()
@@ -46,4 +52,19 @@ abstract class BaseRecyclerAdapter<in B : ViewDataBinding, T, in VM : BaseAdapte
         this.notifyDataSetChanged()
     }
 
+    fun addItem(item: T) {
+        dataList.add(item)
+    }
+
+    fun removeItem(item: T) {
+        dataList.remove(item)
+    }
+
+    fun clearItem() {
+        dataList.clear()
+    }
+
+    fun setOnItemClickListener(func: (position: Int, model: T) -> Unit) {
+        this.onItemClick = func
+    }
 }

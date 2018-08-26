@@ -23,6 +23,4 @@ class MainAdapter : BaseRecyclerAdapter<ListitemSimpleBinding, CategoryBean, Mai
 
     override fun getLayoutId(): Int = R.layout.listitem_simple
 
-    //override fun getViewModel(position: Int): MainAdapterViewModel? = MainAdapterViewModel()
-
 }
