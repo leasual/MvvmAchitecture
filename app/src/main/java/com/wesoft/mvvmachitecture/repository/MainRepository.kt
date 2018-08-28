@@ -20,9 +20,15 @@ class MainRepository @Inject constructor(private val app: App): BaseRepository()
     fun getCategories(): Flowable<MutableList<CategoryBean>> {
         return object : NetworkBoundResource<MutableList<CategoryBean>, BaseResponse<MutableList<CategoryBean>>>(app) {
 
-            override fun loadFromDB(): Flowable<MutableList<CategoryBean>>? {
-                return null
+            override fun loadFromDB(): MutableList<CategoryBean>? {
+                val dataList = arrayListOf<CategoryBean>()
+                dataList.add(CategoryBean("1", "wesoft", "慧讯软件", 1))
+                dataList.add(CategoryBean("1", "wesoft", "慧讯软件", 2))
+                dataList.add(CategoryBean("1", "wesoft", "慧讯软件", 3))
+                return dataList
             }
+
+            override fun shouldLoadFromCache(): Boolean = true
 
             override fun shouldFetch(data: MutableList<CategoryBean>?): Boolean = (data == null || data.isEmpty())
 
