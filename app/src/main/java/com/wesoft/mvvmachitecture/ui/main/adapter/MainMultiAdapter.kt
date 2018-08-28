@@ -1,10 +1,11 @@
-package com.wesoft.mvvmachitecture.ui.main
+package com.wesoft.mvvmachitecture.ui.main.adapter
 
 import android.databinding.ViewDataBinding
 import com.wesoft.mvvmachitecture.base.adapter.BaseAdapterItem
 import com.wesoft.mvvmachitecture.base.adapter.BaseMultiTypeRecyclerAdapter
 import com.wesoft.mvvmachitecture.databinding.ListitemMultiContentBinding
 import com.wesoft.mvvmachitecture.databinding.ListitemMultiTitleBinding
+import com.wesoft.mvvmachitecture.ui.main.MainAdapterViewModel
 
 /**
  * Created by james on 2018/8/24.

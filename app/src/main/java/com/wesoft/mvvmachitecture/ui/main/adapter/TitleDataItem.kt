@@ -1,4 +1,4 @@
-package com.wesoft.mvvmachitecture.ui.main
+package com.wesoft.mvvmachitecture.ui.main.adapter
 
 import com.wesoft.mvvmachitecture.R
 import com.wesoft.mvvmachitecture.base.adapter.BaseAdapterItem

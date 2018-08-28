@@ -7,6 +7,9 @@ import com.wesoft.mvvmachitecture.base.BaseFragment
 import com.wesoft.mvvmachitecture.base.adapter.BaseAdapterItem
 import com.wesoft.mvvmachitecture.databinding.FragmentMainBinding
 import com.wesoft.mvvmachitecture.extension.bindLinearLayout
+import com.wesoft.mvvmachitecture.ui.main.adapter.ContentDataItem
+import com.wesoft.mvvmachitecture.ui.main.adapter.MainMultiAdapter
+import com.wesoft.mvvmachitecture.ui.main.adapter.TitleDataItem
 
 /**
  * Created by james on 2018/8/26.

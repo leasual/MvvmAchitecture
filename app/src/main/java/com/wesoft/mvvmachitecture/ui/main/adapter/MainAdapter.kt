@@ -1,10 +1,11 @@
-package com.wesoft.mvvmachitecture.ui.main
+package com.wesoft.mvvmachitecture.ui.main.adapter
 
 import android.util.Log
 import com.wesoft.mvvmachitecture.R
 import com.wesoft.mvvmachitecture.base.adapter.BaseRecyclerAdapter
 import com.wesoft.mvvmachitecture.databinding.ListitemSimpleBinding
 import com.wesoft.mvvmachitecture.model.CategoryBean
+import com.wesoft.mvvmachitecture.ui.main.MainAdapterViewModel
 
 /**
  * Created by james on 2018/8/24.
