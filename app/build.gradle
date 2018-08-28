@@ -116,4 +116,8 @@ dependencies {
     kapt deps.lifecycle.compiler
     kapt deps.databinding
     kapt deps.glide.compiler
+
+    androidTestImplementation deps.mockito.core
+    testImplementation deps.junit
+    testImplementation deps.mock_web_server
 }

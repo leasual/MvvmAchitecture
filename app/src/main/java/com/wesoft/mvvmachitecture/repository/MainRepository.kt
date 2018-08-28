@@ -30,7 +30,7 @@ class MainRepository @Inject constructor(private val app: App): BaseRepository()
 
             override fun shouldLoadFromCache(): Boolean = true
 
-            override fun shouldFetch(data: MutableList<CategoryBean>?): Boolean = (data == null || data.isEmpty())
+            override fun shouldFetch(data: MutableList<CategoryBean>?): Boolean = true
 
             override fun cache(data: MutableList<CategoryBean>) {
 

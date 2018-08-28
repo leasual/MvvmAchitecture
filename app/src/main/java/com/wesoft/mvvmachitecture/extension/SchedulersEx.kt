@@ -8,6 +8,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.functions.Function
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by james.li on 2018/8/23.
@@ -51,4 +53,21 @@ fun <T> Flowable<T>.updateLoading(loading: MediatorLiveData<Boolean>): Flowable<
 
 fun Disposable.disposedBag(dispose: CompositeDisposable) {
     dispose.add(this)
+}
+
+
+class RetryWithDelay(private val maxRetries: Int, private var delay: Long = 0, private val delayAmount: Long = 100)
+    : Function<Flowable<out Throwable>, Flowable<*>> {
+
+    private var retryCount = 0
+    override fun apply(t: Flowable<out Throwable>): Flowable<*> {
+        return t.flatMap({
+            if (++retryCount < maxRetries) {
+                delay += delayAmount
+                Flowable.timer(delay, TimeUnit.MILLISECONDS)
+            } else {
+                Flowable.error(it)
+            }
+        })
+    }
 }

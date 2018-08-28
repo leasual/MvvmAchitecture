@@ -3,6 +3,7 @@ package com.wesoft.mvvmachitecture.vo
 import android.util.Log
 import com.wesoft.mvvmachitecture.App
 import com.wesoft.mvvmachitecture.api.APIException
+import com.wesoft.mvvmachitecture.extension.RetryWithDelay
 import com.wesoft.mvvmachitecture.extension.ioMain
 import com.wesoft.mvvmachitecture.extension.isNetworkAvailable
 import com.wesoft.mvvmachitecture.extension.toast
@@ -63,6 +64,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>(val app: App) {
     private fun fetchFromNetwork(emitter: FlowableEmitter<ResultType>) {
         callApi()
                 .flatMap { (it as BaseResponse<*>).filterData() }
+                .retryWhen(RetryWithDelay(3))
                 .ioMain()
                 .subscribe(
                         {
@@ -88,7 +90,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>(val app: App) {
                                 }
                             }
                             Log.d("test", "error return= ${throwable.printStackTrace()}")
-                            emitter.onComplete()
+                            emitter.onError(throwable)
                         },
                         {
                             emitter.onComplete()

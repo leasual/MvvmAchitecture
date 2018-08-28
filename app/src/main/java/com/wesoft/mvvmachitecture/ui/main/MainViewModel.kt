@@ -21,10 +21,17 @@ class MainViewModel @Inject constructor() : BaseViewModel<MainRepository>() {
         repository
                 .getCategories()
                 .updateLoading(isLoading)
-                .subscribe {
-                    Log.d("test", "viewModel get data= " + it.size)
-                    if (categories.value != it) categories.value = it
-                }
+                .subscribe(
+                        {
+                            data ->
+                            Log.d("test", "viewModel get data= " + data.size)
+                            if (categories.value != data) categories.value = data
+                        },
+                        {
+                            error ->
+                            Log.d("test", "error= ${error.message}")
+                        }
+                )
                 .disposedBag(dispose)
     }
 
