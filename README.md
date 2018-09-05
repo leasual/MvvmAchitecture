@@ -101,27 +101,4 @@ App     Application
                     
 ##### 4. ViewModel的数据通过 MediatorLiveData或者LiveData暴露给UI
 ##### 如有其他不足之处，欢迎大家积极进行完善。
-
-
-`/*code is far away from bug with the animal protecting
-    *  ┏┓　　　┏┓
-    *┏┛┻━━━┛┻┓
-    *┃　　　　　　　┃ 　
-    *┃　　　━　　　┃
-    *┃　┳┛　┗┳　┃
-    *┃　　　　　　　┃
-    *┃　　　┻　　　┃
-    *┃　　　　　　　┃
-    *┗━┓　　　┏━┛
-    *　　┃　　　┃神兽保佑
-    *　　┃　　　┃代码无BUG！
-    *　　┃　　　┗━━━┓
-    *　　┃　　　　　　　┣┓
-    *　　┃　　　　　　　┏┛
-    *　　┗┓┓┏━┳┓┏┛
-    *　　　┃┫┫　┃┫┫
-    *　　　┗┻┛　┗┻┛ 
-    *　　　
-    */`
-            
         
